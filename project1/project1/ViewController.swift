@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UITableViewController {
+    
     var pictures = [String]()
 
     override func viewDidLoad() {
@@ -17,6 +18,7 @@ class ViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let fm = FileManager.default // atribui o valor retornado pelo gerenciador
+        
         let path = Bundle.main.resourcePath! // Define o caminho do recurso do nosso pacote
         let items = try! fm.contentsOfDirectory(atPath: path) // Definir o conteúdo do diretório em um caminho
         
@@ -25,8 +27,9 @@ class ViewController: UITableViewController {
                 pictures.append(item)
             }
         }
+        pictures.sort() // Challenge 2
         
-        print(pictures)
+//        print(pictures)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,6 +45,9 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
+            
+            vc.position = (position: indexPath.row + 1, total: pictures.count) // Challenge 3
+            
             navigationController?.pushViewController(vc, animated: true)
         }
     }

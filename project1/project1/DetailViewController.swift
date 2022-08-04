@@ -9,17 +9,27 @@ import UIKit
 
 class DetailViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
+    
     var selectedImage: String?
+    var position: (position: Int, total: Int)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = selectedImage
+        guard let position = position else { // Challenge 3
+            print("Sem posição")
+            return
+        }
+        
+        guard let selectedImage = selectedImage else {
+            print("Sem imagem")
+            return
+        }
+        
+        title = "\(position.position)/\(position.total)" // Challenge 3
         navigationItem.largeTitleDisplayMode = .never
 
-        if let imageToLoad = selectedImage {
-            imageView.image = UIImage(named: imageToLoad)
-        }
+        imageView.image = UIImage(named: selectedImage)
     }
     
     override func viewWillAppear(_ animated: Bool) {
