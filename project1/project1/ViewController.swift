@@ -8,11 +8,13 @@
 import UIKit
 
 class ViewController: UITableViewController {
-    
     var pictures = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Stor Viewer"
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         let fm = FileManager.default // atribui o valor retornado pelo gerenciador
         let path = Bundle.main.resourcePath! // Define o caminho do recurso do nosso pacote
