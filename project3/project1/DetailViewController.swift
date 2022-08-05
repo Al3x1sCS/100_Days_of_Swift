@@ -26,7 +26,7 @@ class DetailViewController: UIViewController {
             return
         }
         
-        title = selectedImage + " - \(position.position)/\(position.total)" // Challenge 3
+        title = selectedImage + " - \(position.position)/\(position.total)" // Challenge 3 e Challenge 1 Project 3
         navigationItem.largeTitleDisplayMode = .never
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
