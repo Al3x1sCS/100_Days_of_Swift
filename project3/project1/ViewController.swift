@@ -17,6 +17,9 @@ class ViewController: UITableViewController {
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped)) // Challenge 2 - Projeto 3
+        
         let fm = FileManager.default // atribui o valor retornado pelo gerenciador
         
         let path = Bundle.main.resourcePath! // Define o caminho do recurso do nosso pacote
@@ -51,5 +54,16 @@ class ViewController: UITableViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    @objc func shareTapped() {  // Challenge 2 - Projeto 3
+        var items: [Any] = ["Veja meu codigo no GITHUB!"]
+        if let url = URL(string: "https://github.com/Al3x1sCS/100_Days_of_Swift/tree/main/project3") {
+            items.append(url)
+        }
+        
+        let vc = UIActivityViewController(activityItems: items, applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
+    } // Challenge 2 - Projeto 3
 }
 
