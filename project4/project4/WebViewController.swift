@@ -25,7 +25,6 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         
         guard websites != nil && currentWebsite != nil else {
-            print("Websites and/or currentWebsite not set")
             navigationController?.popViewController(animated: true)
             return
         }
