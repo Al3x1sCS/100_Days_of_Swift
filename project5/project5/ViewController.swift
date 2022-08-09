@@ -37,6 +37,10 @@ class ViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    func submit(_ answer: String){
+        
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usedWords.count
     }
@@ -48,7 +52,17 @@ class ViewController: UITableViewController {
     }
     
     @objc func promptForAnswer() {
+        let ac = UIAlertController(title: "Digite a resposta.", message: nil, preferredStyle: .alert)
+        ac.addTextField()
         
+        let submitAction = UIAlertAction(title: "Enviar", style: .default) {
+            [weak self, weak ac] _ in
+            guard let answer = ac?.textFields?[0].text else { return }
+            self?.submit(answer)
+        }
+        
+        ac.addAction(submitAction)
+        present(ac, animated: true)
     }
 }
 
