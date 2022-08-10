@@ -18,23 +18,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", ]
+        countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "poland", "russia", "spain", "uk", "us"]
         
-        countries.append()
-        countries.append()
-        countries.append()
-        countries.append()
-        countries.append()
-        countries.append()
-        countries.append()
-        countries.append("poland")
-        countries.append("russia")
-        countries.append("spain")
-        countries.append("uk")
-        countries.append("us")
-
+        button1.layer.borderWidth = 12
+        button2.layer.borderWidth = 12
+        button3.layer.borderWidth = 12
+        
+        button1.layer.borderColor = UIColor.lightGray.cgColor
+        button2.layer.borderColor = UIColor.lightGray.cgColor
+        button3.layer.borderColor = UIColor.lightGray.cgColor
+        
+        askQuestion()
     }
-
-
+    
+    func askQuestion() {
+        button1.setImage(UIImage(named: countries[0]), for: .normal)
+        button2.setImage(UIImage(named: countries[1]), for: .normal)
+        button3.setImage(UIImage(named: countries[2]), for: .normal)
+    }
+    
 }
 
