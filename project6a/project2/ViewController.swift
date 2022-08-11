@@ -24,13 +24,13 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "poland", "russia", "spain", "uk", "us"]
         
-        button1.layer.borderWidth = 12
-        button2.layer.borderWidth = 12
-        button3.layer.borderWidth = 12
-        
-        button1.layer.borderColor = UIColor.systemPurple.cgColor
-        button2.layer.borderColor = UIColor.systemPurple.cgColor
-        button3.layer.borderColor = UIColor.systemPurple.cgColor
+//        button1.layer.borderWidth = 11
+//        button2.layer.borderWidth = 11
+//        button3.layer.borderWidth = 11
+//
+//        button1.layer.borderColor = UIColor.systemPurple.cgColor
+//        button2.layer.borderColor = UIColor.systemPurple.cgColor
+//        button3.layer.borderColor = UIColor.systemPurple.cgColor
         
         askQuestion()
         
