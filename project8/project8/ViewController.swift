@@ -13,45 +13,96 @@ class ViewController: UIViewController {
     var answersLabel: UILabel!
     var currentAnswer: UITextField!
     var scoreLabel: UILabel!
+    
     var letterButtons = [UIButton]()
+    var activatedButtons = [UIButton]()
+    var solutions = [String]()
+    var score = 0
+    var level = 1
     
     let submit = UIButton(type: .system)
     let clear = UIButton(type: .system)
     let buttonsView = UIView()
-    let stackView = UIStackView()
     
-    let width = 150
-    let height = 80
+    func loadLevel() {
+        var clueString = ""
+        var solutionString = ""
+        var letterBits = [String]()
+
+        if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
+            if let levelContents = try? String(contentsOf: levelFileURL) {
+                var lines = levelContents.components(separatedBy: "\n")
+                lines.shuffle()
+
+                for (index, line) in lines.enumerated() {
+                    let parts = line.components(separatedBy: ": ")
+                    let answer = parts[0]
+                    let clue = parts[1]
+
+                    clueString += "\(index + 1). \(clue)\n"
+
+                    let solutionWord = answer.replacingOccurrences(of: "|", with: "")
+                    solutionString += "\(solutionWord.count) letters\n"
+                    solutions.append(solutionWord)
+
+                    let bits = answer.components(separatedBy: "|")
+                    letterBits += bits
+                }
+            }
+        }
+        
+        cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+        answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        letterBits.shuffle()
+
+        if letterBits.count == letterButtons.count {
+            for i in 0 ..< letterButtons.count {
+                letterButtons[i].setTitle(letterBits[i], for: .normal)
+            }
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         style()
         layout()
+        loadLevel()
     }
     
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
     }
+    
+    @objc func letterTapped(_ sender: UIButton) {
+        
+    }
+
+    @objc func submitTapped(_ sender: UIButton) {
+        
+    }
+
+    @objc func clearTapped(_ sender: UIButton) {
+        
+    }
 }
 
 extension ViewController {
     func style() {
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        
         // Labels
         scoreLabel = UILabel()
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.textAlignment = .right
-        scoreLabel.text = "Pontuação: 0"
+        scoreLabel.text = "Score: 0"
         
         cluesLabel = UILabel()
         cluesLabel.translatesAutoresizingMaskIntoConstraints = false
         cluesLabel.font = UIFont.systemFont(ofSize: 24)
-        cluesLabel.text = "PISTAS"
+        cluesLabel.text = "CLUES"
         cluesLabel.numberOfLines = 0
         cluesLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
 //        cluesLabel.backgroundColor = .red // so pra ver melhor
@@ -59,7 +110,7 @@ extension ViewController {
         answersLabel = UILabel()
         answersLabel.translatesAutoresizingMaskIntoConstraints = false
         answersLabel.font = UIFont.systemFont(ofSize: 24)
-        answersLabel.text = "RESPOSTAS"
+        answersLabel.text = "ANSWERS"
         answersLabel.textAlignment = .right
         answersLabel.numberOfLines = 0
         answersLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
@@ -77,14 +128,15 @@ extension ViewController {
         // Buttons
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setTitle("SUBMIT", for: .normal)
+        submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
         
         clear.translatesAutoresizingMaskIntoConstraints = false
         clear.setTitle("CLEAR", for: .normal)
+        clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         
         // Buttons View
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         buttonsView.layer.cornerRadius = 15
-        
         
     }
     
@@ -159,24 +211,22 @@ extension ViewController {
         // KEYBOARD BUTTONS
         for row in 0..<4 {
             for col in 0..<5 {
-                // create a new button and give it a big font size
+                // cria um novo botão e dá a ele um tamanho de fonte grande
                 let letterButton = UIButton(type: .system)
                 letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
                 
-                // give the button some temporary text so we can see it on-screen
+                // dá ao botão algum texto temporário para que possamos vê-lo na tela
                 letterButton.setTitle("ABC", for: .normal)
+                letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
                 
-                // calculate the frame of this button using its column and row
-                let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
+                // calcula o "frame" deste botão usando sua coluna e linha
+                let frame = CGRect(x: col * 152, y: row * 82, width: 141, height: 71)
                 letterButton.frame = frame
                 letterButton.layer.borderWidth = 1
                 letterButton.layer.cornerRadius = 15
                 letterButton.backgroundColor = .systemGray6
                 
-                // add it to the buttons view
                 buttonsView.addSubview(letterButton)
-                
-                // and also to our letterButtons array
                 letterButtons.append(letterButton)
             }
         }
