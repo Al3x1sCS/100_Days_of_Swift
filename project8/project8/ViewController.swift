@@ -91,9 +91,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
+    // MARK: Style
     func style() {
         
-        // Labels
+//        Labels
         scoreLabel = UILabel()
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.textAlignment = .right
@@ -105,7 +106,7 @@ extension ViewController {
         cluesLabel.text = "CLUES"
         cluesLabel.numberOfLines = 0
         cluesLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-//        cluesLabel.backgroundColor = .red // so pra ver melhor
+        //cluesLabel.backgroundColor = .red // so pra ver melhor
         
         answersLabel = UILabel()
         answersLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -114,18 +115,18 @@ extension ViewController {
         answersLabel.textAlignment = .right
         answersLabel.numberOfLines = 0
         answersLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-//        answersLabel.backgroundColor = .blue // so pra ver melhor
+        //answersLabel.backgroundColor = .blue // so pra ver melhor
         
-        // Text Fields
+//        Text Fields
         currentAnswer = UITextField()
         currentAnswer.translatesAutoresizingMaskIntoConstraints = false
         currentAnswer.placeholder = "Tap letters to guess"
         currentAnswer.textAlignment = .center
         currentAnswer.font = UIFont.systemFont(ofSize: 44)
         currentAnswer.isUserInteractionEnabled = false
-//        currentAnswer.backgroundColor = .green // so pra ver melhor
+        //currentAnswer.backgroundColor = .green // so pra ver melhor
         
-        // Buttons
+//         Buttons
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setTitle("SUBMIT", for: .normal)
         submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
@@ -134,12 +135,13 @@ extension ViewController {
         clear.setTitle("CLEAR", for: .normal)
         clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         
-        // Buttons View
+//      Buttons View
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         buttonsView.layer.cornerRadius = 15
         
     }
     
+    // MARK: Layout
     func layout() {
         
         view.addSubview(scoreLabel)
@@ -150,13 +152,13 @@ extension ViewController {
         view.addSubview(clear)
         view.addSubview(buttonsView)
         
-        // SCORE
+//      SCORE
         NSLayoutConstraint.activate([
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
         ])
         
-        // CLUES
+//      CLUES
         NSLayoutConstraint.activate([
             // fixa a parte superior do "cluesLabel" na parte inferior do "scoreLabel"
             cluesLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
@@ -166,7 +168,7 @@ extension ViewController {
             cluesLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100)
         ])
         
-        // ANSWERS
+//      ANSWERS
         NSLayoutConstraint.activate([
             // fixa a parte superior do "answersLabel" na parte inferior do "scoreLabel"
             answersLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
@@ -178,28 +180,28 @@ extension ViewController {
             answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor)
         ])
         
-        // CURRENT ANSWER
+//      CURRENT ANSWER
         NSLayoutConstraint.activate([
             currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20)
         ])
         
-        // SUBMIT BUTTON
+//      SUBMIT BUTTON
         NSLayoutConstraint.activate([
             submit.topAnchor.constraint(equalTo: currentAnswer.bottomAnchor),
             submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100),
             submit.heightAnchor.constraint(equalToConstant: 44)
         ])
         
-        // CLEAR BUTTON
+//      CLEAR BUTTON
         NSLayoutConstraint.activate([
             clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
             clear.centerYAnchor.constraint(equalTo: submit.centerYAnchor),
             clear.heightAnchor.constraint(equalToConstant: 44)
         ])
         
-        // BUTTON VIEW
+//      BUTTON VIEW
         NSLayoutConstraint.activate([
             buttonsView.widthAnchor.constraint(equalToConstant: 750),
             buttonsView.heightAnchor.constraint(equalToConstant: 320),
@@ -208,7 +210,7 @@ extension ViewController {
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
         ])
         
-        // KEYBOARD BUTTONS
+//      KEYBOARD BUTTONS
         for row in 0..<4 {
             for col in 0..<5 {
                 // cria um novo botão e dá a ele um tamanho de fonte grande
