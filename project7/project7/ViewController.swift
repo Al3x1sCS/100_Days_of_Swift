@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
         let urlString: String
         
         if navigationController?.tabBarItem.tag == 0 {
-            // urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
+//            urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
             urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
         } else {
             // urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
@@ -53,7 +53,7 @@ class ViewController: UITableViewController {
     }
     
     func showError() {
-        let ac = UIAlertController(title: "Carregando erro", message: "Ocorreu um problema ao carregar o feed. Por favor verifique sua conexão.", preferredStyle: .alert)
+        let ac = UIAlertController(title: "ERRO!", message: "Ocorreu um problema ao carregar o feed. Por favor verifique sua conexão.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
