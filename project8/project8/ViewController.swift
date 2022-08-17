@@ -32,23 +32,23 @@ class ViewController: UIViewController {
         var clueString = ""
         var solutionString = ""
         var letterBits = [String]()
-
+        
         if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
             if let levelContents = try? String(contentsOf: levelFileURL) {
                 var lines = levelContents.components(separatedBy: "\n")
                 lines.shuffle()
-
+                
                 for (index, line) in lines.enumerated() {
                     let parts = line.components(separatedBy: ": ")
                     let answer = parts[0]
                     let clue = parts[1]
-
+                    
                     clueString += "\(index + 1). \(clue)\n"
-
+                    
                     let solutionWord = answer.replacingOccurrences(of: "|", with: "")
                     solutionString += "\(solutionWord.count) letters\n"
                     solutions.append(solutionWord)
-
+                    
                     let bits = answer.components(separatedBy: "|")
                     letterBits += bits
                 }
@@ -57,9 +57,9 @@ class ViewController: UIViewController {
         
         cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
         answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         letterBits.shuffle()
-
+        
         if letterBits.count == letterButtons.count {
             for i in 0 ..< letterButtons.count {
                 letterButtons[i].setTitle(letterBits[i], for: .normal)
@@ -71,9 +71,9 @@ class ViewController: UIViewController {
     func levelUp(action: UIAlertAction) {
         level += 1
         solutions.removeAll(keepingCapacity: true)
-
+        
         loadLevel()
-
+        
         for btn in letterButtons {
             btn.isHidden = false
         }
@@ -92,15 +92,30 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
     }
     
+    func isAllButtonsPressed() -> Bool {
+        for button in letterButtons {
+            if button.isHidden == false {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     @objc func letterTapped(_ sender: UIButton) {
         guard let buttonTitle = sender.titleLabel?.text else { return }
-            currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
-            activatedButtons.append(sender)
-            sender.isHidden = true
+        currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
+        activatedButtons.append(sender)
+        sender.isHidden = true
     }
-
+    
     @objc func submitTapped(_ sender: UIButton) {
         guard let answerText = currentAnswer.text else { return }
+        
+        // Evita remover pontos por respostas vazias.
+        if answerText.isEmpty {
+            return
+        }
         
         if let solutionPosition = solutions.firstIndex(of: answerText) {
             activatedButtons.removeAll()
@@ -112,22 +127,30 @@ class ViewController: UIViewController {
             currentAnswer.text = ""
             score += 1
             
-            if score % 7 == 0 {
-                let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+            if isAllButtonsPressed() {
+                let ac = UIAlertController(title: "Muito Bem!", message: "Você esta preparado para o próximo level?", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Vamos lá!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
+        } else {
+            // challenge 2
+            let ac = UIAlertController(title: "Incorreto", message: "\"\(answerText)\" não corresponde a uma das respostas", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            
+            // challenge 3
+            score -= 1
         }
     }
-
+    
     @objc func clearTapped(_ sender: UIButton) {
         currentAnswer.text = ""
-
-            for btn in activatedButtons {
-                btn.isHidden = false
-            }
-
-            activatedButtons.removeAll()
+        
+        for btn in activatedButtons {
+            btn.isHidden = false
+        }
+        
+        activatedButtons.removeAll()
     }
 }
 
@@ -135,7 +158,7 @@ extension ViewController {
     // MARK: Style
     func style() {
         
-//        Labels
+        //      Labels
         scoreLabel = UILabel()
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.textAlignment = .right
@@ -158,7 +181,7 @@ extension ViewController {
         answersLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         //answersLabel.backgroundColor = .blue // so pra ver melhor
         
-//        Text Fields
+        //      Text Fields
         currentAnswer = UITextField()
         currentAnswer.translatesAutoresizingMaskIntoConstraints = false
         currentAnswer.placeholder = "Tap letters to guess"
@@ -167,7 +190,7 @@ extension ViewController {
         currentAnswer.isUserInteractionEnabled = false
         //currentAnswer.backgroundColor = .green // so pra ver melhor
         
-//         Buttons
+        //      Buttons
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setTitle("SUBMIT", for: .normal)
         submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
@@ -176,9 +199,8 @@ extension ViewController {
         clear.setTitle("CLEAR", for: .normal)
         clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         
-//      Buttons View
+        //      Buttons View
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
-        buttonsView.layer.cornerRadius = 15
         
     }
     
@@ -193,13 +215,13 @@ extension ViewController {
         view.addSubview(clear)
         view.addSubview(buttonsView)
         
-//      SCORE
+        //      SCORE
         NSLayoutConstraint.activate([
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
         ])
         
-//      CLUES
+        //      CLUES
         NSLayoutConstraint.activate([
             // fixa a parte superior do "cluesLabel" na parte inferior do "scoreLabel"
             cluesLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
@@ -209,7 +231,7 @@ extension ViewController {
             cluesLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100)
         ])
         
-//      ANSWERS
+        //      ANSWERS
         NSLayoutConstraint.activate([
             // fixa a parte superior do "answersLabel" na parte inferior do "scoreLabel"
             answersLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
@@ -221,28 +243,28 @@ extension ViewController {
             answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor)
         ])
         
-//      CURRENT ANSWER
+        //      CURRENT ANSWER
         NSLayoutConstraint.activate([
             currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20)
         ])
         
-//      SUBMIT BUTTON
+        //      SUBMIT BUTTON
         NSLayoutConstraint.activate([
             submit.topAnchor.constraint(equalTo: currentAnswer.bottomAnchor),
             submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100),
             submit.heightAnchor.constraint(equalToConstant: 44)
         ])
         
-//      CLEAR BUTTON
+        //      CLEAR BUTTON
         NSLayoutConstraint.activate([
             clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
             clear.centerYAnchor.constraint(equalTo: submit.centerYAnchor),
             clear.heightAnchor.constraint(equalToConstant: 44)
         ])
         
-//      BUTTON VIEW
+        //      BUTTON VIEW
         NSLayoutConstraint.activate([
             buttonsView.widthAnchor.constraint(equalToConstant: 750),
             buttonsView.heightAnchor.constraint(equalToConstant: 320),
@@ -251,7 +273,7 @@ extension ViewController {
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
         ])
         
-//      KEYBOARD BUTTONS
+        //      KEYBOARD BUTTONS
         for row in 0..<4 {
             for col in 0..<5 {
                 // cria um novo botão e dá a ele um tamanho de fonte grande
@@ -265,7 +287,9 @@ extension ViewController {
                 // calcula o "frame" deste botão usando sua coluna e linha
                 let frame = CGRect(x: col * 152, y: row * 82, width: 141, height: 71)
                 letterButton.frame = frame
+                // Challenge 1
                 letterButton.layer.borderWidth = 1
+                letterButton.layer.borderColor = UIColor.lightGray.cgColor
                 letterButton.layer.cornerRadius = 15
                 letterButton.backgroundColor = .systemGray6
                 
