@@ -31,10 +31,12 @@ class ViewController: UITableViewController {
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Filtro", style: .plain, target: self, action: #selector(askFilter))
         
-        if let url = URL(string: urlString) {
-            if let data = try? Data(contentsOf: url) {
-                parse(json: data)
-                return
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            if let url = URL(string: urlString) {
+                if let data = try? Data(contentsOf: url) {
+                    self?.parse(json: data)
+                    return
+                }
             }
         }
         
