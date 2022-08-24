@@ -18,17 +18,15 @@ class ViewController: UITableViewController {
         let urlString: String
         
         if navigationController?.tabBarItem.tag == 0 {
-//            urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
             urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
         } else {
-            // urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
         }
         
         title = "Petições White House"
-
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ceditos", style: .plain, target: self, action: #selector(showCredits))
-
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Filtro", style: .plain, target: self, action: #selector(askFilter))
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -52,7 +50,6 @@ class ViewController: UITableViewController {
             filterData()
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
-//                self?.filterData() // veremos o que fazer com isso e se e preciso.
             }
         }
     }
@@ -62,26 +59,6 @@ class ViewController: UITableViewController {
             let ac = UIAlertController(title: "ERRO!", message: "Ocorreu um problema ao carregar o feed. Por favor verifique sua conexão.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             self?.present(ac, animated: true)
-        }
-    }
-    
-    func filterData() {
-        if filterKeyword.isEmpty {
-            filteredPetitions = petitions
-            navigationItem.leftBarButtonItem?.title = "Filtro"
-            return
-        }
-        
-        navigationItem.leftBarButtonItem?.title = "Filtro (atual: \(filterKeyword))"
-        
-        filteredPetitions = petitions.filter() { petition in
-            if let _ = petition.title.range(of: filterKeyword, options: .caseInsensitive) {
-                return true
-            }
-            if let _ =  petition.body.range(of: filterKeyword, options: .caseInsensitive) {
-                return true
-            }
-            return false
         }
     }
     
@@ -109,20 +86,47 @@ class ViewController: UITableViewController {
         present(ac, animated: true)
     }
     
+    @objc func filterData() {
+        var filterTitle: String
+        
+        if filterKeyword.isEmpty {
+            filterTitle = "Filtro"
+            
+            filteredPetitions = petitions
+        } else {
+            filterTitle = "Filtro (atual: \(filterKeyword))"
+            
+            filteredPetitions = petitions.filter() { petition in
+                if let _ = petition.title.range(of: filterKeyword, options: .caseInsensitive) {
+                    return true
+                }
+                if let _ =  petition.body.range(of: filterKeyword, options: .caseInsensitive) {
+                    return true
+                }
+                return false
+            }
+        }
+        
+        performSelector(onMainThread: #selector(filterDataGuiUpdate), with: filterTitle, waitUntilDone: false)
+    }
+    
     @objc func askFilter() {
-        let ac = UIAlertController(title: "Filtro", message: "Filtre as petições com uma palavra-chave (deixe em branco para redefinir a filtragem)", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Filtro", message: "Filtre as petições com uma palavra-chave ou deixe em branco para redefinir.", preferredStyle: .alert)
         ac.addTextField()
-
+        
         ac.addAction(UIAlertAction(title: "Cancelar", style: .cancel))
-        ac.addAction(UIAlertAction(title: "OK", style: .default) {
-            [weak self, weak ac] _ in
+        ac.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak ac] _ in
             self?.filterKeyword = ac?.textFields?[0].text ?? ""
-            self?.filterData()
-            self?.tableView.reloadData()
+            self?.performSelector(inBackground: #selector(ViewController.filterData), with: nil)
         })
         
         present(ac, animated: true)
-
+        
+    }
+    
+    @objc func filterDataGuiUpdate(filterTitle: String) {
+        navigationItem.leftBarButtonItem?.title = filterTitle
+        tableView.reloadData()
     }
 }
 
