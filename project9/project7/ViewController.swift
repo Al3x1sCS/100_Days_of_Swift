@@ -38,9 +38,9 @@ class ViewController: UITableViewController {
                     return
                 }
             }
+            
+            self?.showError()
         }
-        
-        showError()
     }
     
     
@@ -50,14 +50,19 @@ class ViewController: UITableViewController {
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
             filterData()
-            tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+//                self?.filterData() // veremos o que fazer com isso e se e preciso.
+            }
         }
     }
     
     func showError() {
-        let ac = UIAlertController(title: "ERRO!", message: "Ocorreu um problema ao carregar o feed. Por favor verifique sua conexão.", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
-        present(ac, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let ac = UIAlertController(title: "ERRO!", message: "Ocorreu um problema ao carregar o feed. Por favor verifique sua conexão.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self?.present(ac, animated: true)
+        }
     }
     
     func filterData() {
@@ -66,9 +71,9 @@ class ViewController: UITableViewController {
             navigationItem.leftBarButtonItem?.title = "Filtro"
             return
         }
-
+        
         navigationItem.leftBarButtonItem?.title = "Filtro (atual: \(filterKeyword))"
-
+        
         filteredPetitions = petitions.filter() { petition in
             if let _ = petition.title.range(of: filterKeyword, options: .caseInsensitive) {
                 return true
