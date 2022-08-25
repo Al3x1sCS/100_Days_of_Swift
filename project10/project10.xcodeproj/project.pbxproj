@@ -14,6 +14,7 @@
 		CE70AB1428B6B34000A36B23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE70AB1328B6B34000A36B23 /* Assets.xcassets */; };
 		CE70AB1728B6B34000A36B23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE70AB1528B6B34000A36B23 /* LaunchScreen.storyboard */; };
 		CE70AB1F28B6B8DB00A36B23 /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70AB1E28B6B8DB00A36B23 /* PersonCell.swift */; };
+		CED996DE28B7A55B009A10D5 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED996DD28B7A55B009A10D5 /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		CE70AB1628B6B34000A36B23 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE70AB1828B6B34000A36B23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE70AB1E28B6B8DB00A36B23 /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		CED996DD28B7A55B009A10D5 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				CE70AB0C28B6B33D00A36B23 /* SceneDelegate.swift */,
 				CE70AB0E28B6B33D00A36B23 /* ViewController.swift */,
 				CE70AB1E28B6B8DB00A36B23 /* PersonCell.swift */,
+				CED996DD28B7A55B009A10D5 /* Person.swift */,
 				CE70AB1028B6B33D00A36B23 /* Main.storyboard */,
 				CE70AB1328B6B34000A36B23 /* Assets.xcassets */,
 				CE70AB1528B6B34000A36B23 /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED996DE28B7A55B009A10D5 /* Person.swift in Sources */,
 				CE70AB0F28B6B33D00A36B23 /* ViewController.swift in Sources */,
 				CE70AB0B28B6B33D00A36B23 /* AppDelegate.swift in Sources */,
 				CE70AB1F28B6B8DB00A36B23 /* PersonCell.swift in Sources */,

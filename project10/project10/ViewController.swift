@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    var people = [Person]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +23,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
-            fatalError("Unable to dequeue a PersonCell")
+            fatalError("ERROR: - Não é possível desenfileirar PersonCell - ")
         }
+        
         return cell
     }
     
@@ -44,8 +46,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             try? jpegData.write(to: imagePath)
         }
         
-        dismiss(animated: true)
+        let person = Person(name: "Desconhecido", image: imageName)
+        people.append(person)
+        collectionView.reloadData()
         
+        dismiss(animated: true)
     }
     
     func getDocumentsDirectory() -> URL {
