@@ -63,3 +63,16 @@ extension String {
 }
 
 input.containsAny(of: languages)
+
+languages.contains(where: input.contains)
+
+
+let string = "Olá tudo bem, como vai você?"
+let attributedString = NSMutableAttributedString(string: string)
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 8), range: NSRange(location: 0, length: 3))
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 16), range: NSRange(location: 4, length: 4))
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 24), range: NSRange(location: 8, length: 4))
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 32), range: NSRange(location: 13, length: 5))
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 40), range: NSRange(location: 18, length: 5))
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 50), range: NSRange(location: 22, length: 5))
+attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 60), range: NSRange(location: 27, length: 1))
