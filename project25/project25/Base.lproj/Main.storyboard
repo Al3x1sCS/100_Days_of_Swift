@@ -11,6 +11,7 @@
         <!--View Controller-->
         <scene sceneID="veu-78-LPg">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zPu-gS-oNM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <collectionViewController id="Onc-wn-OFc" customClass="ViewController" customModule="project25" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ohf-JK-Vyd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -20,18 +21,18 @@
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="imageView" id="jLd-38-a1V">
-                                <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="imageView" id="jLd-38-a1V">
+                                <rect key="frame" x="57" y="10" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="94S-yq-QCS">
-                                    <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1000" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qs7-Wp-BRU">
-                                            <rect key="frame" x="0.0" y="0.0" width="145" height="145"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
@@ -41,7 +42,8 @@
                                         <constraint firstItem="qs7-Wp-BRU" firstAttribute="centerX" secondItem="94S-yq-QCS" secondAttribute="centerX" id="M3Q-ql-0S8"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="145" height="145"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <size key="customSize" width="300" height="300"/>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -51,13 +53,13 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="Hb1-wG-hck"/>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zPu-gS-oNM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2462.3188405797105" y="-53.571428571428569"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SVW-zc-p8S">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="542-D3-Nkw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fvp-50-pwy" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qdy-Lu-d3X">
@@ -69,7 +71,6 @@
                         <segue destination="Onc-wn-OFc" kind="relationship" relationship="rootViewController" id="Hbw-Cc-cB3"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="542-D3-Nkw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1552.1739130434785" y="-53.571428571428569"/>
         </scene>
