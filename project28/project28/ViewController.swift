@@ -5,6 +5,7 @@
 //  Created by user on 27/09/22.
 //
 
+import LocalAuthentication
 import UIKit
 
 class ViewController: UIViewController {
@@ -58,7 +59,30 @@ class ViewController: UIViewController {
     }
     
     @IBAction func authenticateTapped(_ sender: Any) {
-        unlockSecretMessage()
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Identify yourself!"
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                [weak self] success, authenticationError in
+                
+                DispatchQueue.main.async {
+                    if success {
+                        self?.unlockSecretMessage()
+                    } else {
+                        let ac = UIAlertController(title: "Falha na autenticação", message: "Você não pôde ser verificado; Por favor, tente novamente.", preferredStyle: .alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .default))
+                        self?.present(ac, animated: true)
+                    }
+                }
+            }
+        } else {
+            let ac = UIAlertController(title: "Biometria indisponível", message: "Seu dispositivo não está configurado para autenticação biométrica.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(ac, animated: true)
+        }
     }
     
 }
