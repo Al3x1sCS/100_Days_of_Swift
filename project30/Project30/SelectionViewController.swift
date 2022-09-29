@@ -78,7 +78,7 @@ class SelectionViewController: UITableViewController {
 		// give the images a nice shadow to make them look a bit more dramatic
 		cell.imageView?.layer.shadowColor = UIColor.black.cgColor
 		cell.imageView?.layer.shadowOpacity = 1
-		cell.imageView?.layer.shadowRadius = 10
+		cell.imageView?.layer.shadowRadius = 5
 		cell.imageView?.layer.shadowOffset = CGSize.zero
 
 		// each image stores how often it's been tapped
