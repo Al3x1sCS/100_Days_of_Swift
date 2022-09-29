@@ -56,7 +56,11 @@ class SelectionViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "Cell")
+
+        if cell == nil {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        }
 
 		// find the image for this cell, and load its thumbnail
 		let currentImage = items[indexPath.row % items.count]
